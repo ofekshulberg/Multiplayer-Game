@@ -8,7 +8,7 @@ height = 700
 win = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Client")
 
-
+# Class for creating buttons
 class Button:
     def __init__(self, text, x, y, color):
         self.text = text
@@ -32,10 +32,11 @@ class Button:
         else:
             return False
 
-
+# Function to redraw the game window
 def redrawWindow(win, game, p):
     win.fill((128,128,128))
 
+    # Display waiting message if not connected to opponent, else display game status
     if not(game.connected()):
         font = pygame.font.SysFont("comicsans", 80)
         text = font.render("Waiting for Player...", 1, (255,0,0), True)
@@ -80,8 +81,10 @@ def redrawWindow(win, game, p):
 
     pygame.display.update()
 
-
+# Initialize buttons
 btns = [Button("Rock", 50, 500, (0,0,0)), Button("Scissors", 250, 500, (255,0,0)), Button("Paper", 450, 500, (0,255,0))]
+
+# Main game loop
 def main():
     run = True
     clock = pygame.time.Clock()
@@ -98,6 +101,7 @@ def main():
             print("Couldn't get game")
             break
 
+        # Check if both players have made a move
         if game.bothWent():
             redrawWindow(win, game, player)
             pygame.time.delay(500)
@@ -108,6 +112,7 @@ def main():
                 print("Couldn't get game")
                 break
 
+            # Display game result
             font = pygame.font.SysFont("comicsans", 90)
             if (game.winner() == 1 and player == 1) or (game.winner() == 0 and player == 0):
                 text = font.render("You Won!", 1, (255,0,0))
@@ -138,6 +143,7 @@ def main():
 
         redrawWindow(win, game, player)
 
+# Menu screen loop
 def menu_screen():
     run = True
     clock = pygame.time.Clock()
@@ -159,5 +165,6 @@ def menu_screen():
 
     main()
 
+# Start the game by showing the menu screen
 while True:
     menu_screen()
